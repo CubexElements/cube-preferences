@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-ajax/iron-request.html">
 <link rel="import" href="../fort-indexeddb-mirror/fort-indexeddb-mirror.html">
+<link rel="import" href="../fort-behavior/fort-service-behavior.html">
 
 <dom-module id="fort-preferences" attributes="name value cache">
   <template>
@@ -13,51 +14,58 @@
     Polymer(
       {
         is:            'fort-preferences',
+        behaviors:     [FortServiceBehavior],
         properties:    {
           name:  {type: String},
           value: {type: String, notify: true},
-          cache: {type: Boolean}
+          cache: {type: Boolean},
+          url:   {type: String, computed: '_computeUrl(name)', readonly: true}
         },
         _oldValue:     null,
         observers:     ['_valueChanged(value.*)'],
         _initialized:  false,
-        _prefUrl:      function ()
+        _computeUrl:   function (name)
                        {
-                         return '//apps.fortifi.me:8888/fortifi/preferences/' + this.name;
+                         return '//' + this.getServiceHost('apps', 8888) + '/fortifi/preferences/' + name;
                        },
         ready:         function ()
                        {
                          var self = this, oReq = new XMLHttpRequest();
-                         oReq.addEventListener(
-                           "load", function ()
+                         this.async(
+                           function ()
                            {
-                             if(this.status == '200')
-                             {
-                               try
+                             oReq.addEventListener(
+                               "load", function ()
                                {
-                                 var response = JSON.parse(this.responseText);
-                                 if(response.status == '200')
+                                 if(this.status == '200')
                                  {
-                                   self.value = JSON.parse(response.value);
+                                   try
+                                   {
+                                     var response = JSON.parse(this.responseText);
+                                     if(response.status == '200')
+                                     {
+                                       self.value = JSON.parse(response.value);
+                                     }
+                                     else
+                                     {
+                                       self.value = null;
+                                     }
+                                   }
+                                   catch(e)
+                                   {
+                                     console.error(e);
+                                   }
+                                   finally
+                                   {
+                                     self._initialized = true;
+                                   }
                                  }
-                                 else
-                                 {
-                                   self.value = null;
-                                 }
                                }
-                               catch(e)
-                               {
-                                 console.error(e);
-                               }
-                               finally
-                               {
-                                 self._initialized = true;
-                               }
-                             }
+                             );
+                             oReq.open('GET', this.url, true);
+                             oReq.send();
                            }
                          );
-                         oReq.open('GET', this._prefUrl(), true);
-                         oReq.send();
                        },
         _valueChanged: function ()
                        {
@@ -77,7 +85,7 @@
                                }
                              }
                            );
-                           oReq.open(this.value === undefined ? 'DELETE' : 'PUT', this._prefUrl(), true);
+                           oReq.open(this.value === undefined ? 'DELETE' : 'PUT', this.url, true);
                            oReq.send(this.value === undefined ? null : JSON.stringify(this.value));
                          }
                        }
