@@ -16,6 +16,7 @@
         is:            'fort-preferences',
         behaviors:     [FortServiceBehavior],
         properties:    {
+          gaid:  {type: String, readonly: true},
           name:  {type: String},
           value: {type: String, notify: true},
           cache: {type: Boolean},
@@ -26,7 +27,8 @@
         _initialized:  false,
         _computeUrl:   function (name)
                        {
-                         return '//' + this.getServiceHost('apps') + '/fortifi/preferences/' + name;
+                         return '//' + this.getServiceHost('apps') + '/fortifi/preferences/'
+                           + (this.gaid ? this.gaid + ':' : '') + name;
                        },
         ready:         function ()
                        {
