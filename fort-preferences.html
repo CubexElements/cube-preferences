@@ -65,6 +65,7 @@
                                }
                              );
                              oReq.open('GET', this.url, true);
+                             oReq.withCredentials = true;
                              oReq.send();
                            }
                          );
