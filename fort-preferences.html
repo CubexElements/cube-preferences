@@ -20,7 +20,7 @@
           name:  {type: String},
           value: {type: String, notify: true},
           cache: {type: Boolean},
-          url:   {type: String, computed: '_computeUrl(name)', readonly: true}
+          _url:  {type: String, computed: '_computeUrl(name)', readonly: true}
         },
         _oldValue:     null,
         observers:     ['_valueChanged(value.*)'],
@@ -64,7 +64,7 @@
                                  }
                                }
                              );
-                             oReq.open('GET', this.url, true);
+                             oReq.open('GET', this._url, true);
                              oReq.withCredentials = true;
                              oReq.send();
                            }
@@ -88,7 +88,8 @@
                                }
                              }
                            );
-                           oReq.open(this.value === undefined ? 'DELETE' : 'PUT', this.url, true);
+                           oReq.open(this.value === undefined ? 'DELETE' : 'PUT', this._url, true);
+                           oReq.withCredentials = true;
                            oReq.send(this.value === undefined ? null : JSON.stringify(this.value));
                          }
                        }
