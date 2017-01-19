@@ -1,6 +1,6 @@
-_[Demo and API docs](https://elements.fortifi.it/elements/fort-preferences)_
+_[Demo and API docs](https://elements.cubex.io/elements/cube-preferences)_
 
-##&lt;fort-preferences&gt;
+##&lt;cube-preferences&gt;
 
 An element providing a starting point for your own reusable Polymer elements.
 
@@ -30,4 +30,4 @@ And you can run it via:
     polyserve
 
 Once running, you can preview your element at
-`http://localhost:8080/components/fort-preferences/`, where `fort-preferences` is the name of the directory containing it.
+`http://localhost:8080/components/cube-preferences/`, where `cube-preferences` is the name of the directory containing it.

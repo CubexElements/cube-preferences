@@ -1,20 +1,20 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-ajax/iron-request.html">
-<link rel="import" href="../fort-indexeddb-mirror/fort-indexeddb-mirror.html">
-<link rel="import" href="../fort-behavior/fort-service-behavior.html">
+<link rel="import" href="../cube-indexeddb-mirror/cube-indexeddb-mirror.html">
+<link rel="import" href="../cube-behavior/cube-service-behavior.html">
 
-<dom-module id="fort-preferences" attributes="name value cache">
+<dom-module id="cube-preferences" attributes="name value cache">
   <template>
     <template is="dom-if" if="[[cache]]">
-      <fort-indexeddb-mirror data="{{value}}" persisted-data="{{persistedValue}}"
-                             key="[[name]]"></fort-indexeddb-mirror>
+      <cube-indexeddb-mirror data="{{value}}" persisted-data="{{persistedValue}}"
+                             key="[[name]]"></cube-indexeddb-mirror>
     </template>
   </template>
   <script>
     Polymer(
       {
-        is:            'fort-preferences',
-        behaviors:     [Polymer.FortServiceBehavior],
+        is:            'cube-preferences',
+        behaviors:     [Polymer.CubeServiceBehavior],
         properties:    {
           gaid:  {type: String, readonly: true},
           name:  {type: String},
@@ -27,7 +27,7 @@
         _initialized:  false,
         _computeUrl:   function (name)
                        {
-                         return '//' + this.getServiceHost('apps') + '/fortifi/preferences/'
+                         return '//' + this.getServiceHost('apps') + '/cubex/preferences/'
                            + (this.gaid ? this.gaid + ':' : '') + name;
                        },
         ready:         function ()

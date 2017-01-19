@@ -1,5 +1,5 @@
 {
-  "name": "fort-preferences",
+  "name": "cube-preferences",
   "version": "1.0.0",
   "authors": [
     "Tom Kay <oridan82@gmail.com>"
@@ -12,9 +12,9 @@
     "preferences"
   ],
   "private": true,
-  "main": "fort-preferences.html",
+  "main": "cube-preferences.html",
   "license": "MIT",
-  "homepage": "https://github.com/FortifiElements/fort-preferences/",
+  "homepage": "https://github.com/CubexElements/cube-preferences/",
   "ignore": [
     "/.*",
     "/test/",
@@ -23,8 +23,8 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.6.0",
-    "fort-indexeddb-mirror": "git://github.com/FortifiElements/fort-indexeddb-mirror",
-    "fort-behavior": "git@github.com:FortifiElements/fort-behavior"
+    "cube-indexeddb-mirror": "git://github.com/CubexElements/cube-indexeddb-mirror",
+    "cube-behavior": "git@github.com:CubexElements/cube-behavior"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
